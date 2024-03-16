@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.parkspace.finder.data.AuthViewModel
 import com.parkspace.finder.ui.auth.LoginScreen
 import com.parkspace.finder.ui.auth.SignupScreen
+import com.parkspace.finder.ui.details.ParkingDetails
 import com.parkspace.finder.ui.home.HomeScreen
 
 @Composable
@@ -31,6 +32,9 @@ fun AppNavHost(
         }
         composable(ROUTE_HOME) {
             HomeScreen(viewModel,navController = navController)
+        }
+        composable(ROUTE_DETAILS) {
+            ParkingDetails(viewModel,navController = navController)
         }
     }
 }

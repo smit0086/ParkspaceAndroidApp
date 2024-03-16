@@ -21,6 +21,10 @@ import com.parkspace.finder.R
 import com.parkspace.finder.data.AuthViewModel
 import com.parkspace.finder.navigation.ROUTE_LOGIN
 import com.parkspace.finder.ui.theme.spacing
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.parkspace.finder.navigation.ROUTE_DETAILS
+import com.parkspace.finder.ui.details.ParkingDetails
 
 @Composable
 fun HomeScreen(viewModel: AuthViewModel?,navController: NavHostController) {
@@ -104,6 +108,21 @@ fun HomeScreen(viewModel: AuthViewModel?,navController: NavHostController) {
                     viewModel?.logout()
                     navController.navigate(ROUTE_LOGIN){
                         popUpTo(ROUTE_LOGIN){
+                            inclusive = true
+                        }
+                    }
+                },
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = spacing.extraLarge)
+            ) {
+                Text(text = stringResource(id = R.string.logout))
+            }
+            Button(
+                onClick = {
+                    viewModel?.logout()
+                    navController.navigate(ROUTE_DETAILS){
+                        popUpTo(ROUTE_DETAILS){
                             inclusive = true
                         }
                     }

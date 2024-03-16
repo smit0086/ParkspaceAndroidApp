@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewParkingLotName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parking Lot Name"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textViewAvailability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Availability: 10 spots"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price: $5/hour"
+        android:layout_marginTop="8dp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/buttonReserve"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reserve" />
+
+</LinearLayout>
