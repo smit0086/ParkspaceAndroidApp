@@ -32,8 +32,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.parkspace.finder.data.AuthViewModel
+import com.parkspace.finder.data.BookingViewModel
 import com.parkspace.finder.ui.auth.LoginScreen
 import com.parkspace.finder.ui.auth.SignupScreen
+import com.parkspace.finder.ui.browse.BookingScreen
 import com.parkspace.finder.ui.home.HomeScreen
 import com.parkspace.finder.ui.parkingticket.ParkingTicketScreen
 import com.parkspace.finder.ui.payment.PaymentScreen
@@ -50,6 +52,7 @@ sealed class Screen(val route: String, val icon: ImageVector?, val selectedIcon:
 @Composable
 fun AppNavHost(
     viewModel: AuthViewModel,
+    // bookingViewModel: BookingViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = ROUTE_LOGIN
@@ -129,7 +132,8 @@ fun AppNavHost(
             HomeScreen(viewModel,navController = navController)
         }
         composable(Screen.Bookings.route) {
-            BookignsScreen(navController = navController)
+            // BookingScreen(bookingViewModel = bookingViewModel)
+            BookingScreen()
         }
         composable(Screen.Favorites.route) {
             FavoritesScreen()
