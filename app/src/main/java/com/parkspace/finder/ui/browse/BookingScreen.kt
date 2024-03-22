@@ -29,6 +29,8 @@ fun BookingScreen() {
 
     var startDate by remember { mutableStateOf<Long?>(null) }
     var endDate by remember { mutableStateOf<Long?>(null) }
+    var startTime by remember { mutableStateOf<Date?>(null) }
+    var endTime by remember { mutableStateOf<Date?>(null) }
 
     Column(
         modifier = Modifier
@@ -46,20 +48,104 @@ fun BookingScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Time pickers for start and end times
+        TimePicker(
+            selectedTime = startTime,
+            onTimeSelected = { startTime = it },
+            label = "Start Time"
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TimePicker(
+            selectedTime = endTime,
+            onTimeSelected = { endTime = it },
+            label = "End Time"
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = { /* Handle booking */ }) {
             Text(text = "Book Parking Space")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Show selected start and end dates
+        // Show selected start and end dates and times
         startDate?.let {
             Text(text = "Start Date: ${convertLongToDateString(it)}")
         }
         endDate?.let {
             Text(text = "End Date: ${convertLongToDateString(it)}")
         }
+        startTime?.let {
+            Text(text = "Start Time: ${convertTimeToString(it)}")
+        }
+        endTime?.let {
+            Text(text = "End Time: ${convertTimeToString(it)}")
+        }
     }
+}
+
+@Composable
+fun TimePicker(
+    selectedTime: Date?,
+    onTimeSelected: (Date) -> Unit,
+    label: String
+) {
+    var currentTime by remember { mutableStateOf(Calendar.getInstance()) }
+    val context = LocalContext.current
+
+    Column {
+        OutlinedTextField(
+            value = selectedTime?.let { convertTimeToString(it) } ?: "",
+            onValueChange = { /* Do nothing */ },
+            label = { Text(text = label) },
+            trailingIcon = { TimePickerIcon { showTimePickerDialog(context, currentTime) { time ->
+                currentTime = time
+                onTimeSelected(time.time)
+            } } },
+            readOnly = true,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+fun TimePickerIcon(onClick: () -> Unit) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Default.DateRange, // You can use the same icon for now
+            contentDescription = stringResource(id = R.string.select_date) // Update the content description
+        )
+    }
+}
+
+private fun showTimePickerDialog(
+    context: android.content.Context,
+    currentTime: Calendar,
+    onTimeSet: (Calendar) -> Unit
+) {
+    val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+    val minute = currentTime.get(Calendar.MINUTE)
+
+    val timePickerDialog = android.app.TimePickerDialog(
+        context,
+        { _, hourOfDay, minute ->
+            currentTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            currentTime.set(Calendar.MINUTE, minute)
+            onTimeSet(currentTime)
+        },
+        hour,
+        minute,
+        false
+    )
+    timePickerDialog.show()
+}
+
+fun convertTimeToString(time: Date): String {
+    val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+    return sdf.format(time)
 }
 
 fun getFragmentManager(context: android.content.Context): FragmentManager {
