@@ -172,7 +172,8 @@ fun AppNavHost(
                     },
                     onFeedbackSubmitted = { feedback ->
                         println("Feedback submitted: $feedback")
-                    }
+                    },
+                        navController = navController
                 )
 
             }

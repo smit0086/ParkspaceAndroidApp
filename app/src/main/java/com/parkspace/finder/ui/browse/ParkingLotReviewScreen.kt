@@ -9,34 +9,55 @@ import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.parkspace.finder.ui.theme.md_theme_light_primary
+import androidx.navigation.NavHostController
+import com.parkspace.finder.R
 
 @Composable
 fun ParkingLotReviewScreen(
     initialRating: Float = 4.5f,
     initialFeedback: String = "Great Experience!",
     onRatingSubmitted: (Float) -> Unit,
-    onFeedbackSubmitted: (String) -> Unit
+    onFeedbackSubmitted: (String) -> Unit,
+    navController: NavHostController
 ) {
     var rating by remember { mutableStateOf(initialRating) }
     var feedback by remember { mutableStateOf(initialFeedback) }
 
     Scaffold(
         content = {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                Text(
-                    text = "Review Parking Lot",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp
-                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(
+                            onClick = { navController.popBackStack() },
+                            modifier = Modifier.offset(x = (-24).dp)
+                    ) {
+                        Icon(
+                                painter = painterResource(id = R.drawable.back_24),
+                                contentDescription = "back icon"
+                        )
+                    }
+                    Text(
+                            text = "Review Parking Lot",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 32.sp,
+                            modifier = Modifier.padding(top = 6.dp, end = 32.dp)
+                    )
+                }
                 Spacer(modifier = Modifier.height(32.dp))
 
                 // Rating Bar
