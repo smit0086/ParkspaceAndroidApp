@@ -45,6 +45,7 @@ import com.parkspace.finder.ui.auth.SignupScreen
 import com.parkspace.finder.ui.booking.EnterDetailsContent
 import com.parkspace.finder.ui.browse.BrowseScreen
 import com.parkspace.finder.ui.favourite.FavouriteScreen
+import com.parkspace.finder.ui.browse.ParkingLotReviewScreen
 
 import com.parkspace.finder.ui.locationPermission.LocationPermissionScreen
 import com.parkspace.finder.ui.onboarding.OnboardingScreen
@@ -162,7 +163,18 @@ fun AppNavHost(
 //                CompletedBookingScreen(bookingId = bookingId)
             }
             composable(Screen.Favorites.route) {
-                FavouriteScreen(context = context, navController = navController)
+                // FavouriteScreen(context = context, navController = navController)
+                ParkingLotReviewScreen(
+                    initialRating = 3.5f,
+                    initialFeedback = "Great parking lot!",
+                    onRatingSubmitted = { rating ->
+                        println("Rating submitted: $rating")
+                    },
+                    onFeedbackSubmitted = { feedback ->
+                        println("Feedback submitted: $feedback")
+                    }
+                )
+
             }
             composable(Screen.Notifications.route) {
                 NotificationScreen()
