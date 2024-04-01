@@ -43,6 +43,7 @@ import com.parkspace.finder.ui.theme.spacing
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -57,6 +58,7 @@ import com.parkspace.finder.data.ParkingSpaceViewModel
 import com.parkspace.finder.data.Resource
 import com.parkspace.finder.navigation.ROUTE_PARKING_DETAIL
 
+val selectedCards = mutableStateListOf<String>()
 /*
  * Composable function to display a product card.
  *
@@ -67,6 +69,7 @@ import com.parkspace.finder.navigation.ROUTE_PARKING_DETAIL
  */
 @Composable
 fun ProductCard(
+    productId: String,
     price: String,
     productName: String,
     productImage: String,
@@ -133,10 +136,8 @@ fun ProductCard(
                             modifier = Modifier
                                 .size(32.dp)
                                 .padding(4.dp)
-                                .scale(scale)
-                                .alpha(alpha)
                                 .clickable {
-                                    visible = false
+                                    selectedCards.add(productId)
                                 }
                         )
                 }
@@ -248,11 +249,12 @@ fun FavouriteScreen(context: Context, favouritescreenViewModel: ParkingSpaceView
         LazyColumn {
             when (val result = resource) {
                 is Resource.Success -> {
-                    val spaces = result.result
+                    val spaces = result.result.filter { !selectedCards.contains(it.id) }
                     items(spaces.chunked(2)) { pairOfSpaces ->
                         Row(modifier = Modifier.fillMaxWidth()) {
                             pairOfSpaces.forEach { space ->
                                 ProductCard(
+                                    productId = space.id.toString(),
                                     price = space.hourlyPrice.toString(),
                                     productName = space.name,
                                     productImage = space.imageURL,
