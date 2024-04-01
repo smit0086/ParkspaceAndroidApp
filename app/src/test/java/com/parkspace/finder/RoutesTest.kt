@@ -1,4 +1,3 @@
-package com.parkspace.finder
 
 import com.parkspace.finder.navigation.ROUTE_ACCOUNT
 import com.parkspace.finder.navigation.ROUTE_BOOKINGS
@@ -24,8 +23,14 @@ import com.parkspace.finder.navigation.ROUTE_SIGNUP
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+/**
+ * Unit tests for the Routes file.
+ */
 class RoutesTest {
 
+    /**
+     * Test to verify that all route constants have the correct values.
+     */
     @Test
     fun testRoutes() {
         assertEquals("login", ROUTE_LOGIN)
